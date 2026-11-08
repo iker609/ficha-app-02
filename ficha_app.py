@@ -1,12 +1,10 @@
 """Ficha técnica de una aplicación móvil antes de publicarla en la tienda."""
+from decimal import ROUND_HALF_UP, Decimal
 import platform
 from typing import Final
 
-# Añadid aquí las importaciones que necesitéis.
-"""Para la opcion 8"""
-from decimal import ROUND_HALF_UP, Decimal
 # ---------------------------------------------------------------------------
-# Datos de la aplicación. Sustituid los del ejemplo APP-00 por los vuestros.
+# Datos de la aplicación. Asignados a la Pareja 2 (APP-02).
 # ---------------------------------------------------------------------------
 CODIGO: Final[str] = "APP-02"
 NOMBRE: Final[str] = "Lista de la Compra"
@@ -58,9 +56,9 @@ VERDE: Final[int] = 8
 AZUL: Final[int] = 0
 CANAL: Final[int] = 255
 """Opcion 7"""
-PERMISO_CAMARA: Final[int] = 0b0000100 
+PERMISO_CAMARA: Final[int] = 0b0000100
 UNDECIMAL: Final[int] = 1
-DOSDECIMALES:Final[int] = 2
+DOSDECIMALES: Final[int] = 2
 PLANTILLA_UNDECIMAL: Final[str] = "0.1"
 PLANTILLA_DOSDECIMALES: Final[str] = "0.01"
 """Opcion 8"""
@@ -71,28 +69,32 @@ CARACTER_SIMPLE: Final[str] = "-"
 # Funciones auxiliares de la pareja. Al menos una, usada en varias opciones.
 # ---------------------------------------------------------------------------
 COMISION: Final[float] = 0.15
-def fila(etiqueta: str, valor:str) -> str:
-    """ DEvuelve una etiqueta la izquierda y valor a la drecha"""
+
+
+def fila(etiqueta: str, valor: str) -> str:
+    """Devuelve una etiqueta la izquierda y valor a la derecha."""
     return f"{etiqueta:<{ANCHO_ETIQUETA}}{valor:>{ANCHO_VALOR}}"
 
-def separador(caracter:str)-> str:
-    """DEvuelve una linea de separación con el ancho del programa"""
+
+def separador(caracter: str) -> str:
+    """Devuelve una linea de separación con el ancho del programa."""
     return caracter * ANCHO
+
+
 # ---------------------------------------------------------------------------
 # Las diez opciones. Sustituid el docstring y el print(PENDIENTE).
 # ---------------------------------------------------------------------------
 def opcion_1_identificacion() -> None:
-    """Muestra el código, el nombre, el paquete y la version de la aplicación"""
+    """Muestra el código, nombre, paquete y versión de la aplicación."""
     version = f"{VERSION_MAYOR}.{VERSION_MENOR}.{VERSION_PARCHE}"
     print(fila("Codigo:", CODIGO))
     print(fila("Nombre:", NOMBRE))
     print(fila("PAquete:", PAQUETE))
     print(fila("Versión:", version))
-    
 
 
 def opcion_2_tamano() -> None:
-    """Muestra el tamaño del apk en bytes, mb y mib y su diferencia"""
+    """Muestra el tamaño del apk en bytes, mb y mib y su diferencia."""
     tamano_mb = TAMANO_APK / BYTES_POR_MB
     tamano_mib = TAMANO_APK / BYTER_POR_MIB
     diferenciaTamanos = (tamano_mb - tamano_mib) / tamano_mb * PORCENTAJE
@@ -100,12 +102,11 @@ def opcion_2_tamano() -> None:
     print(fila("Bytes:", f"{TAMANO_APK} B"))
     print(fila("En la tienda:", f"{tamano_mb:.2f} MB"))
     print(fila("En el movil:", f"{tamano_mib:.2f} MiB"))
-    print(fila("Diferencia:", f"{diferenciaTamanos:.1f} %")) 
-
+    print(fila("Diferencia:", f"{diferenciaTamanos:.1f} %"))
 
 
 def opcion_3_ingresos() -> None:
-    """Muestra ingresos brutos, netos y la comision de la tienda,"""
+    """Muestra ingresos brutos, netos y la comision de la tienda."""
     ingresos_brutos = DESCARGAS * PRECIO
     comision_tienda = ingresos_brutos * COMISION
     ingresos_netos = ingresos_brutos - comision_tienda
@@ -118,7 +119,7 @@ def opcion_3_ingresos() -> None:
 
 
 def opcion_4_version() -> None:
-    """Empaqueta la version de un entero y lo desempaqueta con bits"""
+    """Empaqueta la version de un entero y lo desempaqueta con bits."""
     version = f"{VERSION_MAYOR}.{VERSION_MENOR}.{VERSION_PARCHE}"
 
     mayor = VERSION_MAYOR << DESPLAZAMIENTO_MAYOR
@@ -131,7 +132,7 @@ def opcion_4_version() -> None:
     parche = version_code & MASCARA
 
     version_desempaquetada = f"{mayor}.{menor}.{parche}"
-    
+
     print("VERSIONCODE")
     print(fila("Versión:", version))
     print(fila("versionCode:", str(version_code)))
@@ -140,8 +141,7 @@ def opcion_4_version() -> None:
 
 
 def opcion_5_permisos() -> None:
-    """Que permisos tiene la aplicación"""
-
+    """Que permisos tiene la aplicación."""
     internet = (PERMISOS & INTERNET) != 0
     notificaciones = (PERMISOS & NOTIFICACIONES) != 0
     camara = (PERMISOS & CAMARA) != 0
@@ -165,7 +165,7 @@ def opcion_5_permisos() -> None:
 
 
 def opcion_6_color() -> None:
-    """MUestra los componentesdel color del icono"""
+    """Muestra los componentes del color del icono."""
     alfa = (COLOR_ICONO >> ALFA) & MASCARA
     rojo = (COLOR_ICONO >> ROJO) & MASCARA
     verde = (COLOR_ICONO >> VERDE) & MASCARA
@@ -184,7 +184,7 @@ def opcion_6_color() -> None:
 
 
 def opcion_7_tipos() -> None:
-    """Muestra tipo y valor de varios datos y conversiones"""
+    """Muestra tipo y valor de varios datos y conversiones."""
     media = ESTRELLAS / VALORACIONES
     permisos_camaraa = (PERMISOS & PERMISO_CAMARA) != 0
     texto_descargas = str(DESCARGAS)
@@ -200,8 +200,9 @@ def opcion_7_tipos() -> None:
     print(f"texto_descargas: {type(texto_descargas)} {texto_descargas}")
     print(f"codigo: {type(codigo)} {codigo}")
 
+
 def opcion_8_redondeo() -> None:
-    """Compara round() con el redondeo de la valoracion media"""
+    """Compara round() con el redondeo de la valoracion media."""
     media = ESTRELLAS / VALORACIONES
     media_decimal = Decimal(str(media))
     plantilla_1 = Decimal(PLANTILLA_UNDECIMAL)
@@ -219,7 +220,7 @@ def opcion_8_redondeo() -> None:
 
 
 def opcion_9_ficha() -> None:
-    """Muestra la ficha completa reutilizando las opciones 1 a 4"""
+    """Muestra la ficha completa reutilizando las opciones 1 a 4."""
     print(separador(CARACTER_DOBLE))
     print(f"{'Ficha de la aplicación':^{ANCHO}}")
     print(separador(CARACTER_DOBLE))
@@ -234,7 +235,7 @@ def opcion_9_ficha() -> None:
 
 
 def opcion_10_acerca_de() -> None:
-    """Muestra el docstring del programa, versión, autores y versión de Python."""
+    """Muestra el docstring, versión, autores y versión de Python."""
     descripcion = __doc__.strip() if __doc__ else ""
     version_python = platform.python_version()
     print("ACERCA DE")
