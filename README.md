@@ -25,10 +25,10 @@ varias comprobaciones sobre tipos y redondeo.
 No hace falta descargar el repositorio ni tener Python instalado, solo disponer de Docker.
 
 ```bash
-docker run --rm --pull always iker609/ficha-app-02:1.0.0
+docker run --rm --pull always yuste135/ficha-app-02:1.0.0
 ```
 
-Página de la imagen: https://hub.docker.com/r/iker609/ficha-app-02
+Página de la imagen: https://hub.docker.com/r/yuste135/ficha-app-02
 
 ## Ejecución en local
 
@@ -52,7 +52,7 @@ docker run --rm ficha-app-02
 Construcción multiarquitectura (`amd64` y `arm64`) y subida a Docker Hub:
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 -t iker609/ficha-app-02:1.0.0 -t iker609/ficha-app-02:latest --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t yuste135/ficha-app-02:1.0.0 -t yuste135/ficha-app-02:latest --push .
 ```
 
 ## Integración continua (CI/CD)
