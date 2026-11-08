@@ -1,4 +1,5 @@
-""" FIcha técnica de una aplicación móvil antes de publicarla en la tienda """
+"""Ficha técnica de una aplicación móvil antes de publicarla en la tienda."""
+import platform
 from typing import Final
 
 # Añadid aquí las importaciones que necesitéis.
@@ -7,24 +8,24 @@ from decimal import ROUND_HALF_UP, Decimal
 # ---------------------------------------------------------------------------
 # Datos de la aplicación. Sustituid los del ejemplo APP-00 por los vuestros.
 # ---------------------------------------------------------------------------
-CODIGO: Final[str] = "APP-00"
-NOMBRE: Final[str] = "Agenda Escolar"
-PAQUETE: Final[str] = "es.ieseuropa.agenda"
-VERSION_MAYOR, VERSION_MENOR, VERSION_PARCHE = 2, 5, 13
-TAMANO_APK: Final[int] = 48_734_208          # bytes
-DESCARGAS: Final[int] = 12_500
-PRECIO: Final[float] = 1.99                  # euros, IVA incluido
-VALORACIONES: Final[int] = 400
-ESTRELLAS: Final[int] = 1_700                # suma de todas las valoraciones
-PERMISOS: Final[int] = 0b0001011
-COLOR_ICONO: Final[int] = 0xFF3A7BD5         # ARGB
+CODIGO: Final[str] = "APP-02"
+NOMBRE: Final[str] = "Lista de la Compra"
+PAQUETE: Final[str] = "es.hogar.listacompra"
+VERSION_MAYOR, VERSION_MENOR, VERSION_PARCHE = 3, 0, 7
+TAMANO_APK: Final[int] = 18_874_368          # bytes
+DESCARGAS: Final[int] = 25_400
+PRECIO: Final[float] = 0.49                  # euros, IVA incluido
+VALORACIONES: Final[int] = 1_000
+ESTRELLAS: Final[int] = 4_350                # suma de todas las valoraciones
+PERMISOS: Final[int] = 0b0010011
+COLOR_ICONO: Final[int] = 0xFFF9A825         # ARGB
 
 
 # ---------------------------------------------------------------------------
 # Datos del programa. Solo hay que cambiar AUTORES.
 # ---------------------------------------------------------------------------
 VERSION_PROGRAMA: Final[str] = "1.0.0"
-AUTORES: Final[str] = "[usuario] · [usuario]"
+AUTORES: Final[str] = "Iker Alcolea Mateos · David Raúl Rus Almaján"
 PENDIENTE: Final[str] = "  (opción pendiente de implementar)"
 
 # ---------------------------------------------------------------------------
@@ -97,9 +98,9 @@ def opcion_2_tamano() -> None:
     diferenciaTamanos = (tamano_mb - tamano_mib) / tamano_mb * PORCENTAJE
     print("TAMAÑO DEL APK")
     print(fila("Bytes:", f"{TAMANO_APK} B"))
-    print(fila("En la tienda:", f"{tamano_mb}"))
-    print(fila("En el movil:", f"{tamano_mib}"))
-    print(fila("Diferencia entre los dos:", f"{diferenciaTamanos}")) 
+    print(fila("En la tienda:", f"{tamano_mb:.2f} MB"))
+    print(fila("En el movil:", f"{tamano_mib:.2f} MiB"))
+    print(fila("Diferencia:", f"{diferenciaTamanos:.1f} %")) 
 
 
 
@@ -108,33 +109,33 @@ def opcion_3_ingresos() -> None:
     ingresos_brutos = DESCARGAS * PRECIO
     comision_tienda = ingresos_brutos * COMISION
     ingresos_netos = ingresos_brutos - comision_tienda
-    print("Ingresos")
-    print(fila("Descargas:", f"{DESCARGAS} unidades"))
-    print(fila("Precio:", f"{PRECIO:.2F}"))
-    print(fila("INgresos brutos:", f"{ingresos_brutos:.2f}"))
-    print(fila("Comision tienda:", f"{comision_tienda:.2f}"))
-    print(fila("Ingresos netos:", f"{ingresos_netos:.2f}"))
+    print("INGRESOS")
+    print(fila("Descargas:", f"{DESCARGAS} uds."))
+    print(fila("Precio:", f"{PRECIO:.2f} €"))
+    print(fila("Ingresos brutos:", f"{ingresos_brutos:.2f} €"))
+    print(fila("Comisión tienda:", f"{comision_tienda:.2f} €"))
+    print(fila("Ingresos netos:", f"{ingresos_netos:.2f} €"))
 
 
 def opcion_4_version() -> None:
     """Empaqueta la version de un entero y lo desempaqueta con bits"""
-    version=f"{VERSION_MAYOR}, {VERSION_MENOR}, {VERSION_PARCHE}"
+    version = f"{VERSION_MAYOR}.{VERSION_MENOR}.{VERSION_PARCHE}"
 
     mayor = VERSION_MAYOR << DESPLAZAMIENTO_MAYOR
     menor = VERSION_MENOR << DESPLAZAMIENTO_MENOR
-    parche =    VERSION_PARCHE
+    parche = VERSION_PARCHE
     version_code = mayor | menor | parche
 
     mayor = version_code >> DESPLAZAMIENTO_MAYOR
     menor = (version_code >> DESPLAZAMIENTO_MENOR) & MASCARA
     parche = version_code & MASCARA
 
-    version_desempaquetada = f"{mayor}, {menor}, {parche}"
+    version_desempaquetada = f"{mayor}.{menor}.{parche}"
     
-    print("VersionCode")
-    print(fila("Version:", version))
-    print(fila("versionCOde:", str(version_code)))
-    print(fila("En hexadecimal:", f"0x{version_code}"))
+    print("VERSIONCODE")
+    print(fila("Versión:", version))
+    print(fila("versionCode:", str(version_code)))
+    print(fila("En hexadecimal:", f"0x{version_code:06X}"))
     print(fila("Desempaquetado:", version_desempaquetada))
 
 
@@ -152,15 +153,15 @@ def opcion_5_permisos() -> None:
     sin_ubicacion = PERMISOS & ~UBICACION
 
     print("PERMISOS")
-    print(f"En binario: {PERMISOS}")
+    print(f"En binario: {PERMISOS:07b}")
     print(f"Internet: {internet}")
     print(f"Notificaciones: {notificaciones}")
     print(f"Cámara: {camara}")
-    print(f"Ubicación {ubicacion}")
-    print(f"COntactos {contactos}")
-    print(f"Micrófono {microfono}")
+    print(f"Ubicación: {ubicacion}")
+    print(f"Contactos: {contactos}")
+    print(f"Micrófono: {microfono}")
     print(f"Almacenamiento: {almacenamiento}")
-    print(f"Sin ubicación: {sin_ubicacion}")
+    print(f"Sin ubicación: {sin_ubicacion:07b}")
 
 
 def opcion_6_color() -> None:
@@ -170,15 +171,15 @@ def opcion_6_color() -> None:
     verde = (COLOR_ICONO >> VERDE) & MASCARA
     azul = (COLOR_ICONO >> AZUL) & MASCARA
 
-    opacidad = alfa/ CANAL * PORCENTAJE
-    color_css = f"#{rojo},{verde},{azul}"
+    opacidad = alfa / CANAL * PORCENTAJE
+    color_css = f"#{rojo:02X}{verde:02X}{azul:02X}"
 
-    print("Color del icono")
-    print(f"ARGB: 0X{COLOR_ICONO}")
-    print(f"Rojo: {rojo}, {rojo:08b}, {rojo:02X}")
-    print(f"Verde: {verde}, {verde:08b}, {verde:02X}")
-    print(f"Azul: {azul}, {azul:08b}, {azul:02X}")
-    print(f"Opacidad: {opacidad}")
+    print("COLOR DEL ICONO")
+    print(f"ARGB: 0x{COLOR_ICONO:08X}")
+    print(f"Rojo: {rojo} {rojo:08b} {rojo:02X}")
+    print(f"Verde: {verde} {verde:08b} {verde:02X}")
+    print(f"Azul: {azul} {azul:08b} {azul:02X}")
+    print(f"Opacidad: {opacidad:.1f} %")
     print(f"Para CSS: {color_css}")
 
 
@@ -190,16 +191,14 @@ def opcion_7_tipos() -> None:
     mayor = VERSION_MAYOR << DESPLAZAMIENTO_MAYOR
     menor = VERSION_MENOR << DESPLAZAMIENTO_MENOR
     codigo = mayor | menor | VERSION_PARCHE
-    ingresos_brutos = DESCARGAS * PRECIO
-    print("Tipos de datos")
-    print(f"Nombre: {type(NOMBRE)} {NOMBRE}")
-    print(f"Descargas: {type(DESCARGAS)} {DESCARGAS}")
-    print(f"Precio: {type(PRECIO)} {PRECIO}")
-    print(f"Media: {type(media)} {media}")
+    print("TIPOS DE DATOS")
+    print(f"NOMBRE: {type(NOMBRE)} {NOMBRE}")
+    print(f"DESCARGAS: {type(DESCARGAS)} {DESCARGAS}")
+    print(f"PRECIO: {type(PRECIO)} {PRECIO}")
+    print(f"media: {type(media)} {media}")
     print(f"pide_camara: {type(permisos_camaraa)} {permisos_camaraa}")
     print(f"texto_descargas: {type(texto_descargas)} {texto_descargas}")
-    print(f"codigo:{type(codigo)} {codigo}")
-    print(f"ingresos brutos: {type(ingresos_brutos)} {ingresos_brutos}")
+    print(f"codigo: {type(codigo)} {codigo}")
 
 def opcion_8_redondeo() -> None:
     """Compara round() con el redondeo de la valoracion media"""
@@ -211,12 +210,12 @@ def opcion_8_redondeo() -> None:
     round_2 = round(media, DOSDECIMALES)
     escolar_1 = media_decimal.quantize(plantilla_1, rounding=ROUND_HALF_UP)
     escolar_2 = media_decimal.quantize(plantilla_2, rounding=ROUND_HALF_UP)
-    print("Redondeo de la valoración media")
-    print(fila("VAlor exacto:", f"{media}"))
-    print(fila("round(), 1 dec.:", f"{round_1}"))
-    print(fila("EScolar, 1 dec.:", f"{escolar_1}"))
-    print(fila("round(), 2dec.:", f"{round_2}"))
-    print(fila("Escolar, 2 dec.:", f"{escolar_2}"))
+    print("REDONDEO DE LA VALORACIÓN MEDIA")
+    print(f"Valor exacto: {media}")
+    print(f"round(), 1 dec.: {round_1}")
+    print(f"Escolar, 1 dec.: {escolar_1}")
+    print(f"round(), 2 dec.: {round_2}")
+    print(f"Escolar, 2 dec.: {escolar_2}")
 
 
 def opcion_9_ficha() -> None:
@@ -235,8 +234,14 @@ def opcion_9_ficha() -> None:
 
 
 def opcion_10_acerca_de() -> None:
-    """[Docstring: qué hace esta opción.]"""
-    print(PENDIENTE)
+    """Muestra el docstring del programa, versión, autores y versión de Python."""
+    descripcion = __doc__.strip() if __doc__ else ""
+    version_python = platform.python_version()
+    print("ACERCA DE")
+    print(descripcion)
+    print(f"Versión: {VERSION_PROGRAMA}")
+    print(f"Autores: {AUTORES}")
+    print(f"Python: {version_python}")
 
 
 # ---------------------------------------------------------------------------
